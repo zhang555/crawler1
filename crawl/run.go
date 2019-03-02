@@ -1,4 +1,4 @@
-package mycrawler
+package crawl
 
 import (
 	"fmt"
