@@ -1,6 +1,7 @@
 package urlManager
 
 import (
+	"github.com/zhang555/crawler1/db"
 	"github.com/zhang555/crawler1/log"
 	"github.com/zhang555/crawler1/model"
 	"time"
@@ -67,11 +68,12 @@ func (urlManage *UrlManager) Init() {
 	var (
 		beans []model.Wiki
 	)
-	DB.Find(&beans)
+	db.DB.Find(&beans)
 
 	if len(beans) == 0 {
-		DB.Create(&model.Wiki{ID: `https://zh.wikipedia.org/wiki/Wiki`, Status: "待爬取"})
-		DB.Find(&beans)
+		//db.DB.Create(&model.Wiki{ID: `https://zh.wikipedia.org/wiki/Wiki`, Status: "待爬取"})
+		db.DB.Create(&model.Wiki{ID: `http://www.baidu.com/`, Status: "待爬取"})
+		db.DB.Find(&beans)
 	}
 
 	for _, value := range beans {
@@ -112,7 +114,7 @@ func (urlManage *UrlManager) AddNewUrl(url string) {
 		article := model.Wiki{ID: url, Status: "待爬取"}
 		article.CreateTime = model.JSONTime(time.Now())
 		article.UpdateTime = model.JSONTime(time.Now())
-		DB.Create(&article)
+		db.DB.Create(&article)
 	}
 }
 
@@ -133,6 +135,7 @@ func (urlManage *UrlManager) AddErrorUrl(url string) {
 		urlManage.UrlMap[url] = NEED_CRAWL
 		urlManage.doingCrawlCount--
 		urlManage.needCrawlCount++
+		urlManage.UrlsToCrawl = append(urlManage.UrlsToCrawl, url)
 
 	} else {
 		log.Log.Error("逻辑错误")
@@ -140,8 +143,6 @@ func (urlManage *UrlManager) AddErrorUrl(url string) {
 }
 
 func (urlManage *UrlManager) HandleReturnUrlsAndContent(urlsandarticle model.UrlsAndContent) {
-
-	//
 	if urlsandarticle.Success {
 		urlManage.AddNewUrls(urlsandarticle.Urls)
 		urlManage.AddFinishUrl(urlsandarticle.Url)
@@ -151,19 +152,22 @@ func (urlManage *UrlManager) HandleReturnUrlsAndContent(urlsandarticle model.Url
 			Content: urlsandarticle.Content,
 			Status:  "完成",
 		}
-		DB.Model(&model.Wiki{}).Updates(&article)
+		db.DB.Model(&model.Wiki{}).Updates(&article)
 	} else {
 		log.Log.Error("error , ", urlsandarticle.ErrorMessage)
 		urlManage.AddErrorUrl(urlsandarticle.Url)
 
 		article := model.Wiki{ID: urlsandarticle.Url, Status: "待爬取"}
-		DB.Model(&model.Wiki{}).Updates(&article)
+		db.DB.Model(&model.Wiki{}).Updates(&article)
 	}
 }
 
 //取出一个待爬取的url
 func (urlManage UrlManager) GetOne() string {
 	if urlManage.needCrawlCount == 0 {
+		return ""
+	}
+	if len(urlManage.UrlsToCrawl) == 0 {
 		return ""
 	}
 	return urlManage.UrlsToCrawl[0]
@@ -174,6 +178,10 @@ func (urlManage *UrlManager) SetFirstUrlCrawling() {
 	if urlManage.needCrawlCount == 0 {
 		return
 	}
+	if len(urlManage.UrlsToCrawl) == 0 {
+		return
+	}
+
 	url := urlManage.UrlsToCrawl[0]
 	urlManage.UrlsToCrawl = urlManage.UrlsToCrawl[1:]
 	urlManage.needCrawlCount--

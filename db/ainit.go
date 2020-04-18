@@ -24,11 +24,14 @@ func init() {
 	dbName := os.Getenv("DB_NAME")
 	port := os.Getenv("DB_PORT")
 
+	if password == "" {
+		password = `88888888`
+	}
 	if host == "" {
 		host = "localhost"
 	}
 	if dbName == "" {
-		dbName = "crawler3"
+		dbName = "crawler"
 	}
 	if port == "" {
 		port = "3306"
