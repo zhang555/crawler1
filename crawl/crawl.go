@@ -3,7 +3,6 @@ package crawl
 import (
 	"fmt"
 	"github.com/PuerkitoBio/goquery"
-	"github.com/zhang555/crawler1/log"
 	"github.com/zhang555/crawler1/model"
 	"net/http"
 	"strings"
@@ -64,11 +63,56 @@ func CrawlUrl(urlstr string) (model.UrlsAndContent, error) {
 
 	})
 
-	h, err := doc.Html()
-	if err != nil {
-		log.Log.Warn(err)
-	}
-	urlAndContent.Content = h
+	doc.Find("a").Each(func(i int, s *goquery.Selection) {
+		value, _ := s.Attr("href")
+		parseUrl, _ := res.Request.URL.Parse(value)
+		if parseUrl == nil {
+			return
+		}
+		value = parseUrl.String()
+		if isImageUrl(value) {
+			urlAndContent.Pictures = append(urlAndContent.Pictures, value)
+		}
+	})
+	doc.Find("img").Each(func(i int, s *goquery.Selection) {
+
+		value, _ := s.Attr("src")
+		parseUrl, _ := res.Request.URL.Parse(value)
+		if parseUrl == nil {
+			return
+		}
+		value = parseUrl.String()
+		if isImageUrl(value) {
+			urlAndContent.Pictures = append(urlAndContent.Pictures, value)
+		}
+
+		value, _ = s.Attr("data-src")
+		parseUrl, _ = res.Request.URL.Parse(value)
+		if parseUrl == nil {
+			return
+		}
+		value = parseUrl.String()
+		if isImageUrl(value) {
+			urlAndContent.Pictures = append(urlAndContent.Pictures, value)
+		}
+
+	})
+
+	//h, err := doc.Html()
+	//if err != nil {
+	//	log.Log.Warn(err)
+	//}
+	//urlAndContent.Content = h
 
 	return urlAndContent, nil
+}
+
+func isImageUrl(url string) bool {
+	imgIdentifies := []string{".jpg", ".jpeg", ".png", ".bmp", ".photo"}
+	for _, imgIdentify := range imgIdentifies {
+		if strings.HasSuffix(url, imgIdentify) {
+			return true
+		}
+	}
+	return false
 }
