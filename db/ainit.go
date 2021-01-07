@@ -13,7 +13,7 @@ var (
 	DB *gorm.DB
 )
 
-func init() {
+func InitMysql() {
 
 	var (
 		err error

@@ -72,7 +72,8 @@ func (urlManage *UrlManager) Init() {
 
 	if len(beans) == 0 {
 		//db.DB.Create(&model.Wiki{ID: `https://zh.wikipedia.org/wiki/Wiki`, Status: "待爬取"})
-		db.DB.Create(&model.Wiki{ID: `http://www.baidu.com/`, Status: "待爬取"})
+		//db.DB.Create(&model.Wiki{ID: `http://www.baidu.com/`, Status: "待爬取"})
+		db.DB.Create(&model.Wiki{ID: `https://www.voachinese.com/p/6646.html`, Status: "待爬取"})
 		db.DB.Find(&beans)
 	}
 
@@ -142,22 +143,33 @@ func (urlManage *UrlManager) AddErrorUrl(url string) {
 	}
 }
 
-func (urlManage *UrlManager) HandleReturnUrlsAndContent(urlsandarticle model.UrlsAndContent) {
-	if urlsandarticle.Success {
-		urlManage.AddNewUrls(urlsandarticle.Urls)
-		urlManage.AddFinishUrl(urlsandarticle.Url)
+//
+func (urlManage *UrlManager) HandleReturnUrlsAndContent(urlsAndArticle model.UrlsAndContent) {
+	if urlsAndArticle.Success {
+		urlManage.AddNewUrls(urlsAndArticle.Urls)
+		urlManage.AddFinishUrl(urlsAndArticle.Url)
 
 		article := model.Wiki{
-			ID:      urlsandarticle.Url,
-			Content: urlsandarticle.Content,
+			ID:      urlsAndArticle.Url,
+			Content: urlsAndArticle.Content,
 			Status:  "完成",
 		}
 		db.DB.Model(&model.Wiki{}).Updates(&article)
-	} else {
-		log.Log.Error("error , ", urlsandarticle.ErrorMessage)
-		urlManage.AddErrorUrl(urlsandarticle.Url)
 
-		article := model.Wiki{ID: urlsandarticle.Url, Status: "待爬取"}
+		for _, picture := range urlsAndArticle.Pictures {
+			var wikiImage = model.WikiImage{
+				PageType:  "美国之音",
+				ImageUrl:  picture,
+				ModelTime: model.ModelTime{},
+			}
+			db.DB.Model(&model.WikiImage{}).Create(&wikiImage)
+		}
+
+	} else {
+		log.Log.Error("error , ", urlsAndArticle.ErrorMessage)
+		urlManage.AddErrorUrl(urlsAndArticle.Url)
+
+		article := model.Wiki{ID: urlsAndArticle.Url, Status: "待爬取"}
 		db.DB.Model(&model.Wiki{}).Updates(&article)
 	}
 }

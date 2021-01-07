@@ -2,7 +2,8 @@ show databases ;
 
 use crawler;
 
-drop table wiki;
+# drop table wiki;
+truncate wiki;
 
 
 create table wiki

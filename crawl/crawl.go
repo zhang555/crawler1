@@ -44,7 +44,7 @@ func CrawlUrl(urlstr string) (model.UrlsAndContent, error) {
 
 		index := strings.Index(value, "/")
 		var urll string
-		urll = "https://zh.wikipedia.org/wiki"
+		urll = "https://www.voachinese.com"
 		if (strings.HasPrefix(value, urll)) &&
 			!strings.Contains(value[index:], ":") &&
 			!strings.Contains(value, "#") {
@@ -59,9 +59,9 @@ func CrawlUrl(urlstr string) (model.UrlsAndContent, error) {
 			}
 		}
 
-		if strings.HasPrefix(value, `http`) {
-			urlAndContent.Urls = append(urlAndContent.Urls, value)
-		}
+		//if strings.HasPrefix(value, `http`) {
+		//	urlAndContent.Urls = append(urlAndContent.Urls, value)
+		//}
 
 	})
 
