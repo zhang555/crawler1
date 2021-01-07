@@ -46,7 +46,7 @@ func InitMysql() {
 	for {
 		DB, err = gorm.Open("mysql", path)
 		if err != nil {
-			log.Log.
+			logger.Log.
 				//WithField("host", host).
 				//WithField("dbName", dbName).
 				//WithField("port", port).
@@ -60,7 +60,7 @@ func InitMysql() {
 		break
 	}
 
-	log.Log.Info("connect database success ")
+	logger.Log.Info("connect database success ")
 
 	//DB.LogMode(true)
 	DB.LogMode(false)

@@ -126,7 +126,7 @@ func (urlManage *UrlManager) AddFinishUrl(url string) {
 		urlManage.doingCrawlCount--
 		urlManage.haveCrawlCount++
 	} else {
-		log.Log.Error("逻辑错误")
+		logger.Log.Error("逻辑错误")
 	}
 }
 
@@ -139,7 +139,7 @@ func (urlManage *UrlManager) AddErrorUrl(url string) {
 		urlManage.UrlsToCrawl = append(urlManage.UrlsToCrawl, url)
 
 	} else {
-		log.Log.Error("逻辑错误")
+		logger.Log.Error("逻辑错误")
 	}
 }
 
@@ -166,7 +166,7 @@ func (urlManage *UrlManager) HandleReturnUrlsAndContent(urlsAndArticle model.Url
 		}
 
 	} else {
-		log.Log.Error("error , ", urlsAndArticle.ErrorMessage)
+		logger.Log.Error("error , ", urlsAndArticle.ErrorMessage)
 		urlManage.AddErrorUrl(urlsAndArticle.Url)
 
 		article := model.Wiki{ID: urlsAndArticle.Url, Status: "待爬取"}

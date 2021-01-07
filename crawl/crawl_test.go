@@ -11,11 +11,11 @@ func TestName(t *testing.T) {
 	//u := `https://www.baidu.com/`
 	//u = `http://www.baidu.com/`
 	//u = `https://baike.baidu.com/`
-	u = `https://sc.chinaz.com/`
+	u := `https://www.voachinese.com/a/1585976.html`
 
 	resp, err := CrawlUrl(u)
 	if err != nil {
-		log.Log.Error(`err`, err)
+		logger.Log.Error(`err`, err)
 		return
 	}
 	//log.Log.Info(resp.Content)

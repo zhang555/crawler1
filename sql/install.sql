@@ -1,4 +1,4 @@
-show databases ;
+show databases;
 
 use crawler;
 
@@ -22,6 +22,8 @@ create table wiki
     index page_type_index (page_type)
 );
 
+drop table wiki_image;
+
 create table wiki_image
 (
     id          int auto_increment
@@ -33,6 +35,12 @@ create table wiki_image
     create_time datetime     default CURRENT_TIMESTAMP not null,
     update_time datetime     default CURRENT_TIMESTAMP
         on update CURRENT_TIMESTAMP                    not null,
-    index page_type_index (page_type)
+    index page_type_index (page_type),
+    unique index image_url_index (image_url)
 );
 
+alter table wiki_image
+    add x int default 0 not null;
+
+alter table wiki_image
+    add y int default 0 not null;

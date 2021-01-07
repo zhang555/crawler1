@@ -8,7 +8,7 @@ import (
 
 func main() {
 
-	log.InitLog()
+	logger.InitLog()
 
 	db.InitMysql()
 

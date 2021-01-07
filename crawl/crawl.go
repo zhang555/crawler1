@@ -52,7 +52,7 @@ func CrawlUrl(urlstr string) (model.UrlsAndContent, error) {
 			//url decode
 			url2, err := url.QueryUnescape(value)
 			if err != nil {
-				log.Log.Warn(" url decode error ")
+				logger.Log.Warn(" url decode error ")
 			} else {
 				urlAndContent.Urls = append(urlAndContent.Urls, url2)
 
