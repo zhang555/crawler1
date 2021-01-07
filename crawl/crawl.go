@@ -3,8 +3,10 @@ package crawl
 import (
 	"fmt"
 	"github.com/PuerkitoBio/goquery"
+	"github.com/zhang555/crawler1/log"
 	"github.com/zhang555/crawler1/model"
 	"net/http"
+	"net/url"
 	"strings"
 )
 
@@ -40,22 +42,22 @@ func CrawlUrl(urlstr string) (model.UrlsAndContent, error) {
 		}
 		value = parseUrl.String()
 
-		//index := strings.Index(value, "/")
-		//var urll string
-		//urll = "https://zh.wikipedia.org/wiki"
-		//if (strings.HasPrefix(value, urll)) &&
-		//	!strings.Contains(value[index:], ":") &&
-		//	!strings.Contains(value, "#") {
-		//
-		//	//url decode
-		//	url2, err := url.QueryUnescape(value)
-		//	if err != nil {
-		//		log.Log.Warn(" url decode error ")
-		//	} else {
-		//		urlAndContent.Urls = append(urlAndContent.Urls, url2)
-		//
-		//	}
-		//}
+		index := strings.Index(value, "/")
+		var urll string
+		urll = "https://zh.wikipedia.org/wiki"
+		if (strings.HasPrefix(value, urll)) &&
+			!strings.Contains(value[index:], ":") &&
+			!strings.Contains(value, "#") {
+
+			//url decode
+			url2, err := url.QueryUnescape(value)
+			if err != nil {
+				log.Log.Warn(" url decode error ")
+			} else {
+				urlAndContent.Urls = append(urlAndContent.Urls, url2)
+
+			}
+		}
 
 		if strings.HasPrefix(value, `http`) {
 			urlAndContent.Urls = append(urlAndContent.Urls, value)

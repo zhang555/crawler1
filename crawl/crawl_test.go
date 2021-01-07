@@ -8,9 +8,9 @@ import (
 
 func TestName(t *testing.T) {
 	//u := `https://zh.wikipedia.org/wiki/Wiki`
-	u := `https://www.baidu.com/`
-	u = `http://www.baidu.com/`
-	u = `https://baike.baidu.com/`
+	//u := `https://www.baidu.com/`
+	//u = `http://www.baidu.com/`
+	//u = `https://baike.baidu.com/`
 	u = `https://sc.chinaz.com/`
 
 	resp, err := CrawlUrl(u)
