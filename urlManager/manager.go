@@ -2,7 +2,7 @@ package urlManager
 
 import (
 	"github.com/zhang555/crawler1/db"
-	"github.com/zhang555/crawler1/log"
+	"github.com/zhang555/crawler1/logger"
 	"github.com/zhang555/crawler1/model"
 	"time"
 )

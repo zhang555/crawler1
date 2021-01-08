@@ -2,7 +2,6 @@ package picture
 
 import (
 	"github.com/zhang555/crawler1/db"
-	"github.com/zhang555/crawler1/log"
 	"github.com/zhang555/crawler1/logger"
 	"github.com/zhang555/crawler1/model"
 	"image"
@@ -40,7 +39,7 @@ func Picture() {
 			if err != nil {
 				logger.Log.Println(err)
 				continue
-			}else {
+			} else {
 				logger.Log.Println(`success`)
 
 			}

@@ -2,9 +2,7 @@ package picture
 
 import (
 	"github.com/zhang555/crawler1/db"
-	"github.com/zhang555/crawler1/log"
 	"github.com/zhang555/crawler1/logger"
-	"github.com/zhang555/crawler1/model"
 	"image"
 	"image/jpeg"
 	"testing"
@@ -64,24 +62,26 @@ func TestName1(t *testing.T) {
 	Picture()
 }
 
-func TestName2(t *testing.T) {
-
-	logger.InitLog()
-
-	db.InitMysql()
-
-	db.DB.LogMode(true)
-
-
-	//var wikiImages []model.WikiImage
-	var wikiImage model.WikiImage
-	wikiImage.ID = 1
-
-	err := db.DB.Model(&wikiImage).Updates(map[string]interface{}{
-		`x`: 1,
-		`y`: 11,
-	}).Error
-
-	logger.Log.Println(err)
-
-}
+//func TestName2(t *testing.T) {
+//
+//	logger.InitLog()
+//
+//	db.InitMysql()
+//
+//	db.DB.LogMode(true)
+//
+//	//var wikiImages []model.WikiImage
+//	var wikiImage model.WikiImage
+//	wikiImage.ID = 1
+//
+//	m := map[string]interface{}{
+//		`x`: 1,
+//		`y`: 11,
+//	}
+//
+//	err := db.DB.Model(&wikiImage).Updates(m).Error
+//
+//	//logger.Log.Println(err)
+//	log.Println(err)
+//
+//}

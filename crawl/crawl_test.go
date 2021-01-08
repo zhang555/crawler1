@@ -2,7 +2,7 @@ package crawl
 
 import (
 	"github.com/kr/pretty"
-	"github.com/zhang555/crawler1/log"
+	"github.com/zhang555/crawler1/logger"
 	"testing"
 )
 

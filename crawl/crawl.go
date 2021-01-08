@@ -3,7 +3,7 @@ package crawl
 import (
 	"fmt"
 	"github.com/PuerkitoBio/goquery"
-	"github.com/zhang555/crawler1/log"
+	"github.com/zhang555/crawler1/logger"
 	"github.com/zhang555/crawler1/model"
 	"net/http"
 	"net/url"

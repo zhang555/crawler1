@@ -3,7 +3,7 @@ package main
 import (
 	"github.com/zhang555/crawler1/crawl"
 	"github.com/zhang555/crawler1/db"
-	"github.com/zhang555/crawler1/log"
+	"github.com/zhang555/crawler1/logger"
 )
 
 func main() {

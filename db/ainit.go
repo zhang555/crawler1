@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/mysql"
-	"github.com/zhang555/crawler1/log"
+	"github.com/zhang555/crawler1/logger"
 	"os"
 	"time"
 )
@@ -63,7 +63,7 @@ func InitMysql() {
 	logger.Log.Info("connect database success ")
 
 	//DB.LogMode(true)
-	DB.LogMode(false)
+	//DB.LogMode(false)
 	DB.SingularTable(true)
 
 }
