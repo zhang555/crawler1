@@ -1,6 +1,7 @@
 package picture
 
 import (
+	"github.com/kr/pretty"
 	"github.com/zhang555/crawler1/db"
 	"github.com/zhang555/crawler1/logger"
 	"image"
@@ -15,7 +16,9 @@ func TestName(t *testing.T) {
 
 	image.RegisterFormat("jpg", "\xff\xd8", jpeg.Decode, jpeg.DecodeConfig)
 
-	url1 := `https://gdb.voanews.com/1B4B9011-183F-4FB8-8D69-C722705A2EC9_w100_r1.jpg`
+	//url1 := `https://gdb.voanews.com/1B4B9011-183F-4FB8-8D69-C722705A2EC9_w100_r1.jpg`
+
+	url1 :=`https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTBuTE0vtoheqNfFZ4OUzO6-5EdFoJZqzuS1PRkFPoJhA5Od30nV2X3AOmSjwg&s`
 
 	res, err := GetAndDecodePicture(url1)
 	if err != nil {
@@ -33,6 +36,8 @@ func TestName(t *testing.T) {
 	//
 	logger.Log.Println(res.Image.Bounds().Max.X - res.Image.Bounds().Min.X)
 	logger.Log.Println(res.Image.Bounds().Max.Y - res.Image.Bounds().Min.Y)
+
+	pretty.Println(res.Image.Bounds())
 
 }
 
